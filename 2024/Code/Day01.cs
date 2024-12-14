@@ -2,9 +2,9 @@
 
 public static class Day01
 {
-    public static (IEnumerable<int> left, IEnumerable<int> right) LoadLists(string filename)
+    public static (IEnumerable<int> left, IEnumerable<int> right) LoadLists(string path)
     {
-        var lines = File.ReadAllLines(filename);
+        var lines = File.ReadAllLines(path);
         List<int> left = [];
         List<int> right = [];
         foreach (var line in lines)

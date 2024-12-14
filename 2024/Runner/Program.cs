@@ -18,6 +18,18 @@ switch (puzzle)
             result = Day01.CalculateListSimilarity(left, right);
             break;
         }
+    case "day10-1":
+        {
+            var map = Day10.LoadMap("Data/day10.txt");
+            result = Day10.SumTrailheadScores(map);
+            break;
+        }
+    case "day10-2":
+        {
+            var map = Day10.LoadMap("Data/day10.txt");
+            result = Day10.SumTrailheadRatings(map);
+            break;
+        }
     default:
         return -1;
 }
