@@ -30,6 +30,18 @@ switch (puzzle)
             result = Day10.SumTrailheadRatings(map);
             break;
         }
+    case "day11-1":
+        {
+            var stones = Day11.LoadStones("Data/day11.txt");
+            result = Day11.StoneCount(stones, 25);
+            break;
+        }
+    case "day11-2":
+        {
+            var stones = Day11.LoadStones("Data/day11.txt");
+            result = Day11.StoneCount(stones, 75);
+            break;
+        }
     default:
         return -1;
 }
