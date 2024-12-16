@@ -42,6 +42,12 @@ switch (puzzle)
             result = Day11.StoneCount(stones, 75);
             break;
         }
+    case "day12-1":
+        {
+            var map = Day12.LoadMap("Data/day12.txt");
+            result = Day12.CalculateFencePrice(map);
+            break;
+        }
     default:
         return -1;
 }
