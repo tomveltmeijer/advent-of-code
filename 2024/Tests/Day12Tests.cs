@@ -6,32 +6,30 @@ namespace Tests;
 public sealed class Day12Tests
 {
     [TestMethod]
-    public void CalculateFencePrice_SimpleExample()
+    [DataRow("Data/day12-test1.txt", 140)]
+    [DataRow("Data/day12-test2.txt", 772)]
+    [DataRow("Data/day12-test3.txt", 1930)]
+    public void CalculateFencePrice_Example(string testFile, int expectedPrice)
     {
-        var map = Day12.LoadMap("Data/day12-test1.txt");
+        var map = Day12.LoadMap(testFile);
 
         var result = Day12.CalculateFencePrice(map);
 
-        Assert.AreEqual(140, result);
+        Assert.AreEqual(expectedPrice, result);
     }
 
     [TestMethod]
-    public void CalculateFencePrice_RegionsInRegionsExample()
+    [DataRow("Data/day12-test1.txt", 80)]
+    [DataRow("Data/day12-test2.txt", 436)]
+    [DataRow("Data/day12-test3.txt", 1206)]
+    [DataRow("Data/day12-test4.txt", 236)]
+    [DataRow("Data/day12-test5.txt", 368)]
+    public void CalculateFencePriceWithDiscount_Example(string testFile, int expectedPrice)
     {
-        var map = Day12.LoadMap("Data/day12-test2.txt");
+        var map = Day12.LoadMap(testFile);
 
-        var result = Day12.CalculateFencePrice(map);
+        var result = Day12.CalculateFencePriceWithDiscount(map);
 
-        Assert.AreEqual(772, result);
-    }
-
-    [TestMethod]
-    public void CalculateFencePrice_LargerExample()
-    {
-        var map = Day12.LoadMap("Data/day12-test3.txt");
-
-        var result = Day12.CalculateFencePrice(map);
-
-        Assert.AreEqual(1930, result);
+        Assert.AreEqual(expectedPrice, result);
     }
 }

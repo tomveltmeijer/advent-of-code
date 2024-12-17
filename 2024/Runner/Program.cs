@@ -48,6 +48,12 @@ switch (puzzle)
             result = Day12.CalculateFencePrice(map);
             break;
         }
+    case "day12-2":
+        {
+            var map = Day12.LoadMap("Data/day12.txt");
+            result = Day12.CalculateFencePriceWithDiscount(map);
+            break;
+        }
     default:
         return -1;
 }

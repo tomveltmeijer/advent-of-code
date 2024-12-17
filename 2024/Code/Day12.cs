@@ -1,17 +1,28 @@
 ﻿namespace Code;
 
 using Coordinate = (int x, int y);
+using Direction = (int x, int y);
 
 public static class Day12
 {
     public static char[][] LoadMap(string path)
     {
         return File.ReadAllLines(path)
-            .Select(line => line.ToUpper().ToCharArray())
+            .Select(line => line.ToCharArray())
             .ToArray();
     }
 
     public static int CalculateFencePrice(char[][] map)
+    {
+        return CalculateFencePrice(map, hasDiscount: false);
+    }
+
+    public static int CalculateFencePriceWithDiscount(char[][] map)
+    {
+        return CalculateFencePrice(map, hasDiscount: true);
+    }
+
+    private static int CalculateFencePrice(char[][] map, bool hasDiscount)
     {
         List<Coordinate> visited = [];
         int total = 0;
@@ -25,53 +36,72 @@ public static class Day12
                     continue;
                 }
 
-                total += CalculateFencePriceOfRegion(map, visited, startCoordinate);
+                total += CalculateFencePriceOfRegion(map, visited, startCoordinate, hasDiscount);
             }
         }
         return total;
     }
 
     // Calculate price (area * perimeter) of the region that contains the given startCoordinate
-    private static int CalculateFencePriceOfRegion(char[][] map, List<Coordinate> visited, Coordinate startCoordinate)
+    private static int CalculateFencePriceOfRegion(char[][] map, List<Coordinate> visited, Coordinate startCoordinate, bool hasDiscount)
     {
         var queue = new Queue<Coordinate>();
 
         queue.Enqueue(startCoordinate);
-        visited.Add(startCoordinate);
 
         int area = 0;
-        int perimeter = 0;
+        int fenceCount = 0;
         while (queue.Count > 0)
         {
-            var current = queue.Dequeue();
+            var cell = queue.Dequeue();
+
+            if (visited.Contains(cell))
+            {
+                continue;
+            }
+            visited.Add(cell);
 
             ++area;
 
-            Coordinate[] neighbors =
+            Direction[] directions =
             [
-                current with { x = current.x - 1 },
-                current with { x = current.x + 1 },
-                current with { y = current.y - 1 },
-                current with { y = current.y + 1 },
+                (-1,  0),
+                ( 1,  0),
+                ( 0, -1),
+                ( 0,  1),
             ];
 
-            foreach (var neighbor in neighbors)
+            foreach (var direction in directions)
             {
-                if (!IsInBounds(map, neighbor) || !AreInSameRegion(map, current, neighbor))
+                if (HasFence(map, cell, direction))
                 {
-                    ++perimeter;
-                    continue;
-                }
+                    if (hasDiscount && IsFenceExtensionOfVisitedFence(map, cell, direction, visited))
+                    {
+                        continue;
+                    }
 
-                if (!visited.Contains(neighbor))
+                    ++fenceCount;
+                }
+                else
                 {
+                    var neighbor = GetNeighbor(cell, direction);
                     queue.Enqueue(neighbor);
-                    visited.Add(neighbor);
                 }
             }
         }
 
-        return area * perimeter;
+        return area * fenceCount;
+    }
+
+    private static bool HasFence(char[][] map, Coordinate coordinate, Direction direction)
+    {
+        var neighbor = GetNeighbor(coordinate, direction);
+        return !IsInBounds(map, neighbor) || !AreInSameRegion(map, coordinate, neighbor);
+    }
+
+    private static Coordinate GetNeighbor(Coordinate coordinate, Direction direction)
+    {
+        return coordinate with { x = coordinate.x + direction.x, y = coordinate.y + direction.y };
     }
 
     private static bool IsInBounds(char[][] map, Coordinate coordinate)
@@ -82,5 +112,26 @@ public static class Day12
     private static bool AreInSameRegion(char[][] map, Coordinate a, Coordinate b)
     {
         return map[a.x][a.y] == map[b.x][b.y];
+    }
+    private static bool IsFenceExtensionOfVisitedFence(char[][] map, Coordinate coordinate, Direction direction, IList<Coordinate> visited)
+    {
+        if (direction.x == 0)
+        {
+            var left = GetNeighbor(coordinate, (-1, 0));
+            var right = GetNeighbor(coordinate, (1, 0));
+            return HasExistingFenceInSameDirection(left) || HasExistingFenceInSameDirection(right);
+        }
+        else
+        {
+            var up = GetNeighbor(coordinate, (0, -1));
+            var down = GetNeighbor(coordinate, (0, 1));
+            return HasExistingFenceInSameDirection(up) || HasExistingFenceInSameDirection(down);
+        }
+
+        bool HasExistingFenceInSameDirection(Coordinate neighbor) =>
+            IsInBounds(map, neighbor)
+            && AreInSameRegion(map, coordinate, neighbor)
+            && visited.Contains(neighbor)
+            && HasFence(map, neighbor, direction);
     }
 }
