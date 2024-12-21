@@ -54,6 +54,18 @@ switch (puzzle)
             result = Day12.CalculateFencePriceWithDiscount(map);
             break;
         }
+    case "day13-1":
+        {
+            var machines = Day13.LoadMachines("Data/day13.txt");
+            result = Day13.CalculateRequiredTokens(machines);
+            break;
+        }
+    case "day13-2":
+        {
+            var machines = Day13.LoadMachines("Data/day13.txt");
+            result = Day13.CalculateRequiredTokensPartTwo(machines);
+            break;
+        }
     default:
         return -1;
 }
