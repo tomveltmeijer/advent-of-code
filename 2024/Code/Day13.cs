@@ -46,15 +46,13 @@ public static class Day13
         return machines
             .Sum(m =>
         {
-            var algoButtons = CalculateRequiredPresses(m, limitPresses: false);
-            var buttons = algoButtons;// CalculateRequiredPresses2(m);
+            var buttons = CalculateRequiredPresses(m, limitPresses: false);
             return buttons.a * 3 + buttons.b;
         });
     }
     
     private static (long a, long b) CalculateRequiredPresses(MachineInfo m, bool limitPresses)
     {
-        Console.WriteLine($"{m.A}, {m.B}, {m.Target}");
         var (x, y) = SolveEquation(m);
         var (ix, iy) = ((long)x, (long)y);
         (long a, long b)[] guesses = 
@@ -71,12 +69,8 @@ public static class Day13
             ];
         foreach (var guess in guesses)
         {
-            Console.WriteLine(
-                $"{guess.a} * {m.A.x} + {guess.b} * {m.B.x} = {guess.a * m.A.x + guess.b * m.B.x} ({m.Target.x}), " +
-                $"{guess.a} * {m.A.y} + {guess.b} * {m.B.y} = {guess.a * m.A.y + guess.b * m.B.y} ({m.Target.y}) ");
             if (AttemptSolution(guess.a, guess.b, m, limitPresses))
             {
-                Console.WriteLine("Found solution!");
                 return (guess.a, guess.b);
             }
         }

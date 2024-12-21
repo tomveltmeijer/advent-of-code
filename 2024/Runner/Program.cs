@@ -66,6 +66,19 @@ switch (puzzle)
             result = Day13.CalculateRequiredTokensPartTwo(machines);
             break;
         }
+    case "day14-1":
+        {
+            var robots = Day14.LoadRobots("Data/day14.txt");
+            result = Day14.CalculateSafetyFactor(101, 103, robots, 100);
+            break;
+        }
+    case "day14-2":
+        {
+            var robots = Day14.LoadRobots("Data/day14.txt");
+            Day14.CalculateSafetyFactor(101, 103, robots, 7572);
+            result = 7572; // Based on visualization
+            break;
+        }
     default:
         return -1;
 }
