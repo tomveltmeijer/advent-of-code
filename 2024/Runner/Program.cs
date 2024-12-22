@@ -79,6 +79,12 @@ switch (puzzle)
             result = 7572; // Based on visualization
             break;
         }
+    case "day15-1":
+        {
+            var warehouse = Day15.LoadWarehouse("Data/day15.txt");
+            result = Day15.CalculateBoxPositions(warehouse);
+            break;
+        }
     default:
         return -1;
 }
