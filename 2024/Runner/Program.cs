@@ -85,6 +85,12 @@ switch (puzzle)
             result = Day15.CalculateBoxPositions(warehouse);
             break;
         }
+    case "day15-2":
+        {
+            var warehouse = Day15.LoadBigWarehouse("Data/day15.txt");
+            result = Day15.CalculateBoxPositionsPartTwo(warehouse);
+            break;
+        }
     default:
         return -1;
 }

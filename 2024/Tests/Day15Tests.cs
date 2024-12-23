@@ -16,4 +16,16 @@ public sealed class Day15Tests
 
         Assert.AreEqual(expected, result);
     }
+    
+    [TestMethod]
+    [DataRow("Data/day15-test2.txt", 9021)]
+    [DataRow("Data/day15-test3.txt", 618)]
+    public void CalculateBoxPositionsPartTwo_Example(string path, long expected)
+    {
+        var warehouse = Day15.LoadBigWarehouse(path);
+
+        var result = Day15.CalculateBoxPositionsPartTwo(warehouse);
+
+        Assert.AreEqual(expected, result);
+    }
 }
