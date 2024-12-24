@@ -4,9 +4,9 @@ public static class Day17
 {
     public class Computer
     {
-        public int RegisterA { get; set; }
-        public int RegisterB { get; set; }
-        public int RegisterC { get; set; }
+        public long RegisterA { get; set; }
+        public long RegisterB { get; set; }
+        public long RegisterC { get; set; }
         public IList<int> Program { get; init; }
     }
 
@@ -25,9 +25,9 @@ public static class Day17
 
         return new Computer
         {
-            RegisterA = int.Parse(a),
-            RegisterB = int.Parse(b),
-            RegisterC = int.Parse(c),
+            RegisterA = long.Parse(a),
+            RegisterB = long.Parse(b),
+            RegisterC = long.Parse(c),
             Program = program
         };
     }
@@ -35,7 +35,7 @@ public static class Day17
     public static string RunProgram(Computer computer)
     {
         var ptr = 0;
-        List<int> output = [];
+        List<long> output = [];
         while (ptr < computer.Program.Count)
         {
             var opcode = computer.Program[ptr];
@@ -44,7 +44,7 @@ public static class Day17
             {
                 var n = computer.RegisterA;
                 var d = GetComboOperand(computer, operand);
-                computer.RegisterA = (int)(n / Math.Pow(2, d));
+                computer.RegisterA = (long)(n / Math.Pow(2, d));
             }
             else if (opcode == 1) // bxl
             {
@@ -75,13 +75,13 @@ public static class Day17
             {
                 var n = computer.RegisterA;
                 var d = GetComboOperand(computer, operand);
-                computer.RegisterB = (int)(n / Math.Pow(2, d));
+                computer.RegisterB = (long)(n / Math.Pow(2, d));
             }
             else if (opcode == 7) // cdv
             {
                 var n = computer.RegisterA;
                 var d = GetComboOperand(computer, operand);
-                computer.RegisterC = (int)(n / Math.Pow(2, d));
+                computer.RegisterC = (long)(n / Math.Pow(2, d));
             }
             ptr += 2;
         }
@@ -89,7 +89,23 @@ public static class Day17
         return string.Join(',', output);
     }
 
-    private static int GetComboOperand(Computer computer, int operand) =>
+    public static long FindCorruptedRegisterA(Computer computer)
+    {
+        for (long i = 0; ; i++)
+        {
+            computer.RegisterA = i;
+            computer.RegisterB = 0;
+            computer.RegisterC = 0;
+            var output = RunProgram(computer);
+            var program = string.Join(',', computer.Program);
+            if (output == program)
+            {
+                return i;
+            }
+        }
+    }
+
+    private static long GetComboOperand(Computer computer, long operand) =>
         operand switch
         {
             4 => computer.RegisterA,

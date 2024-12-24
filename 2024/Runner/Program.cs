@@ -109,6 +109,12 @@ switch (puzzle)
             result = Day17.RunProgram(computer);
             break;
         }
+    case "day17-2":
+        {
+            var computer = Day17.LoadComputer("Data/day17.txt");
+            result = Day17.FindCorruptedRegisterA(computer);
+            break;
+        }
     default:
         return -1;
 }
