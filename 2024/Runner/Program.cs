@@ -103,6 +103,12 @@ switch (puzzle)
             result = Day16.CalculateNumberOfBestSeats(maze);
             break;
         }
+    case "day17-1":
+        {
+            var computer = Day17.LoadComputer("Data/day17.txt");
+            result = Day17.RunProgram(computer);
+            break;
+        }
     default:
         return -1;
 }
