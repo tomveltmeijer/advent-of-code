@@ -55,6 +55,14 @@
     "Day 15 - 2": {
       "commandName": "Project",
       "commandLineArgs": "day15-2"
+    },
+    "Day 16 - 1": {
+      "commandName": "Project",
+      "commandLineArgs": "day16-1"
+    },
+    "Day 16 - 2": {
+      "commandName": "Project",
+      "commandLineArgs": "day16-2"
     }
   }
 }

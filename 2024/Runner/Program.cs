@@ -91,6 +91,18 @@ switch (puzzle)
             result = Day15.CalculateBoxPositionsPartTwo(warehouse);
             break;
         }
+    case "day16-1":
+        {
+            var maze = Day16.LoadMaze("Data/day16.txt");
+            result = Day16.CalculateLowestScore(maze);
+            break;
+        }
+    case "day16-2":
+        {
+            var maze = Day16.LoadMaze("Data/day16.txt");
+            result = Day16.CalculateNumberOfBestSeats(maze);
+            break;
+        }
     default:
         return -1;
 }
