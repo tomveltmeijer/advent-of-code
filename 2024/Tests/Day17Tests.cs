@@ -13,7 +13,7 @@ public sealed class Day17Tests
 
         var result = Day17.RunProgram(computer);
 
-        Assert.AreEqual(expected, result);
+        Assert.AreEqual(expected, string.Join(',', result));
     }
     
     [TestMethod]

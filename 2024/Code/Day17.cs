@@ -32,10 +32,10 @@ public static class Day17
         };
     }
 
-    public static string RunProgram(Computer computer)
+    public static List<int> RunProgram(Computer computer)
     {
         var ptr = 0;
-        List<long> output = [];
+        List<int> output = [];
         while (ptr < computer.Program.Count)
         {
             var opcode = computer.Program[ptr];
@@ -69,7 +69,7 @@ public static class Day17
             else if (opcode == 5) // out
             {
                 var number = GetComboOperand(computer, operand) % 8;
-                output.Add(number);
+                output.Add((int)number);
             }
             else if (opcode == 6) // bdv
             {
@@ -86,7 +86,7 @@ public static class Day17
             ptr += 2;
         }
 
-        return string.Join(',', output);
+        return output;
     }
 
     public static long FindCorruptedRegisterA(Computer computer)
@@ -97,8 +97,9 @@ public static class Day17
             computer.RegisterB = 0;
             computer.RegisterC = 0;
             var output = RunProgram(computer);
-            var program = string.Join(',', computer.Program);
-            if (output == program)
+            var program = computer.Program;
+
+            if (output.SequenceEqual(program))
             {
                 return i;
             }
